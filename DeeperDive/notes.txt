@@ -32,4 +32,147 @@ func main() {
 ///////////////////////////////////////////////////////
 
 
-LESSON 2
+LESSON 2 - function infer - we define what the function's return type is going to be for the function
+
+package main
+
+import "fmt"
+
+func main() {
+
+	card := newCard()
+
+	fmt.Println(card)
+}
+
+//When we are defining a new function we have to very specific about the type of data we want to return that is why after parenthesis we should declare string to ensure that we are returing string value
+func newCard() string {
+	return "Five of diamonds"
+}
+
+
+
+
+Also if there are two files in the same folder with the same package main , we donot have to import them because in Go, files that belong to the same package can directly access each other's functions without needing to explicitly import them. This means that if multiple files share the same package name, they can collaborate seamlessly. The misconception here may stem from how code organization works in other programming languages, where imports might be necessary for accessing functionality across files. Understanding this Go-specific behavior can help clarify how to structure your project effectively.
+
+///////////////////////////////////////////////////////
+
+
+LESSON 3 - Arrays and slices 
+
+package main
+
+import "fmt"
+
+func main() {
+
+	card := newCard()
+
+	fmt.Println(card)
+}
+
+/**
+Go has 2 basic data structures for handling list data structs -
+
+- Arrays - fixed length of things
+- Slice - An array that can grow or shrink
+
+Both slices and arrays must have a datatype- meaning we cannot store data of different types in an array or slice
+
+**/
+
+func newCard() string {
+	return "Five of diamonds"
+}
+
+package main
+
+import "fmt"
+
+func main() {
+	//here we are declaring cards as slice
+	cards := []string{newCard(), newCard()}
+	//Note - append function does not update the original slice , it returns a new slice to which we assign it back to the original
+	cards = append(cards, "Six of spades")
+
+	//Iterate of slice of cards and print the result
+	/**
+	range is a keyword that we use to iterate over the elements in an array or slice
+
+	:= syntax is used because we are redeclaring and reassigning the values of i and card everytime we run the loop
+	**/
+	for i, card := range cards {
+		fmt.Println(i, card)
+	}
+
+}
+
+func newCard() string {
+	return "Five of diamonds"
+}
+
+
+/////////////////////////////////////////////////////////
+
+LESSON 4 - Go approach vs OOP approach
+
+
+two files - 
+
+main.go :-------------
+
+package main
+
+func main() {
+	cards := deck{"Ace of Diamonds", newCard()}
+
+	cards = append(cards, "Six of spades")
+
+	// for i, card := range cards {
+	// 	fmt.Println(i, card)
+	// }
+	cards.print()
+
+}
+
+func newCard() string {
+	return "Five of diamonds"
+}
+
+
+
+
+
+
+deck.go: -----------
+
+package main
+
+import "fmt"
+
+/**
+Create a new type of deck which is a slice of strings which extends the functionality of slice
+**/
+
+type deck []string
+
+//here we want to write a new function to print all the values of the cards
+
+//here (d deck) is referred to as the receiver
+
+/**
+func (d deck) print(){
+}
+
+Any variable of type deck now gets access to the print method.
+
+in the main file we will see that while assigning we have assigned cards to be of type deck. therefore cards will have access to all the functions that are assigned to
+**/
+
+func (d deck) print() {
+	for i, card := range d {
+		fmt.Println(i, card)
+	}
+}
+
+
