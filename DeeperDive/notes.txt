@@ -175,8 +175,9 @@ func (d deck) print() {
 	}
 }
 
+///////////////////////////////////////////////////////////////
 
-//LESSON 5 - we will create a new deck using function
+LESSON 5 - we will create a new deck using function
 
 
 
@@ -229,3 +230,12 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+
+///////////////////////////////////////////////////////////////
+
+LESSON 6 - creating deal function - to create a hand of cards and save it on local machine 
+
+
+
+
