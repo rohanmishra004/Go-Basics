@@ -2,24 +2,27 @@ package main
 
 import "fmt"
 
-/**
-Create a new type of deck which is a slice of strings which extends the functionality of slice
-**/
-
 type deck []string
 
-//here we want to write a new function to print all the values of the cards
+func newDeck() deck {
+	cards := deck{}
 
-//here (d deck) is referred to as the receiver
+	//in order to create the all 52 cobinations we are going to seperate the suits and values in 2 different sets and then use for loop twice to map the values to deck
 
-/**
-func (d deck) print(){
+	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
+	cardValues := []string{"Ace", "Two", "Three", "Four"}
+
+	//after this we will setup two for loops nested inside one another to iterate through all the combinations
+
+	//while looping if we have some variable which we are not going to use , we replace that variable with an _
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
+			cards = append(cards, value+" of "+suit)
+		}
+	}
+	return cards
+
 }
-
-Any variable of type deck now gets access to the print method.
-
-in the main file we will see that while assigning we have assigned cards to be of type deck. therefore cards will have access to all the functions that are assigned to
-**/
 
 func (d deck) print() {
 	for i, card := range d {
