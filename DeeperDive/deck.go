@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -62,4 +64,19 @@ func newDeckFromFile(filename string) deck {
 	//now we have a bytesize and we want to convert it to slice of string , the exact opposite of what we were trying before with save on local storage
 	s := strings.Split(string(bs), ",")
 	return deck(s)
+}
+
+//shuffle - to shuffle we will use math/rand function -  func Intn - Intn returns as an int , a non - negative pseudo-random number in [0,n)  from the default Source. It panics if n<=0
+
+// since this is a receiver function we donot need to set any arguments or set any return type since this is only going to shuffle the deck
+func (d deck) shuffle() {
+	for i := range d {
+		//generate random number between 0 and len of deck -1
+		//here the source for rand will remain the same so everytime the rand will return the same type of output , so in order to resolve this we create our source and so now everytime the new random series is generated it will be different
+		source := rand.NewSource(time.Now().UnixNano())
+		r := rand.New(source)
+		newPosition := r.Intn(len(d) - 1)
+		//swap i with new random position
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
