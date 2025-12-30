@@ -559,3 +559,34 @@ func (d deck) shuffle() {
 	}
 }
 
+/////////////////////////////////////////////////////////
+
+
+
+LESSON 9 
+
+Creating unit test cases 
+
+- to create unit test cases in golang we need a go.mod file so inside our folder we run this command  :
+
+go mod init folderName (here we have DeeperDive)
+Then, you will be able to use the run test function from within VSCode, and/or run go test from the terminal.
+
+Go testing is not like Rspec, mocha , jasmine, selenium exact
+to make a test , ceate a new file ending in _test.go
+ex : deck_test.go
+
+- to run all tests in a package , run the command 
+go test
+
+
+Errorf : Omitting a formatting directive will now cause some tests to fail so we will need to add these right away
+
+NOTE : this directive was originally added at the end of the lecture 
+
+When running your tests starting around 8:00 timestamp change the following : 
+t.Errorf("Expected deck length 16 but got " , len(d))
+
+to this 
+
+t.Errorf("Expected deck length of 16, but got %v", len(d))
