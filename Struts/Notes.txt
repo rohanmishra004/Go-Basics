@@ -1,0 +1,194 @@
+STRUTS 
+
+- Data structure , collection of properties that are related to together similar to objects in JS and dictionary in python
+
+
+DECLARATION OF STRUCTS 
+
+package main
+
+import "fmt"
+
+/**
+Here what we are trying to do is to create field a person strut has and from that we will create a new value of type person
+
+Person strut -
+
+first_name : string
+last_name  : string
+
+
+type person
+first_name : "Alex"
+last_name  : "Pearson"
+**/
+
+//here we have defined the struct for a person with two attributes
+type person struct {
+	firstName string
+	lastName  string
+}
+
+func main() {
+	// alex := person{"Alex", "Anderson"} - 1st way
+
+	//2nd way
+	alex := person{
+		firstName: "Alex",
+		lastName:  "Anderson",
+	}
+	fmt.Println(alex)
+}
+
+THere is one more way of defining struct and that uses default value if we dont assign any value to import
+package main
+
+import "fmt"
+
+/**
+Here what we are trying to do is to create field a person strut has and from that we will create a new value of type person
+
+Person strut -
+
+first_name : string
+last_name  : string
+
+
+type person
+first_name : "Alex"
+last_name  : "Pearson"
+**/
+
+//here we have defined the struct for a person with two attributes
+type person struct {
+	firstName string
+	lastName  string
+}
+
+func main() {
+	// alex := person{"Alex", "Anderson"} - 1st way
+
+	//2nd way
+	// alex := person{
+	// 	firstName: "Alex",
+	// 	lastName:  "Anderson",
+	// }
+	// fmt.Println(alex)
+
+	//3rd way
+	//if we define it like this and keep it empty then go assigns it an zero value
+
+	/**
+	ZERO VALUES
+
+	string  : ""
+	int     : 0
+	float   : 0
+	bool    : false
+	**/
+	var alex person
+	alex.firstName = "Alex"
+	alex.lastName = "Anderson"
+	fmt.Println(alex)
+	fmt.Printf("%+v", alex)
+}
+
+
+///////////////////////////////////////////////////////////
+
+
+EMBEDDING STRUCTS
+Taking help from our pervious example - if we are required to have one more info for person ex : contact
+
+and this contact is a combination of two values : email and zipCode 
+
+Then in order to use it we can do is set contact as another struct
+And then we can embed this contact struct into person struct for contact
+
+Sample Code 
+
+package main
+
+import "fmt"
+
+//here we are trying to embed this contactInfo struct into the person struct
+
+type contactInfo struct {
+	email   string
+	zipCode int
+}
+
+type person struct {
+	firstName string
+	lastName  string
+	contact   contactInfo
+}
+
+func main() {
+	jim := person{
+		firstName: "Jim",
+		lastName:  "Halper",
+		contact: contactInfo{
+			email:   "jim@gmail.com",
+			zipCode: 94000,
+		},
+	}
+	fmt.Printf("%+v", jim)
+
+}
+
+
+//////////////////////////////////////////////////
+
+
+STRUCTS AS RECEIVERS 
+
+package main
+
+import "fmt"
+
+//We setup structs to work as receiver functions too
+
+type contactInfo struct {
+	email   string
+	zipCode int
+}
+
+type person struct {
+	firstName string
+	lastName  string
+	contact   contactInfo
+}
+
+func main() {
+	jim := person{
+		firstName: "Jim",
+		lastName:  "Halper",
+		contact: contactInfo{
+			email:   "jim@gmail.com",
+			zipCode: 94000,
+		},
+	}
+	jim.updateName("Jimmy")
+	jim.print()
+
+}
+
+//the person struct is a receiver here
+func (p person) print() {
+	fmt.Printf("%+v", p)
+
+}
+
+//we are going to write a function called update name which updates the person as the receiver
+
+//This will not directly update the name of the object , so here we will be introduced to pointers
+func (p person) updateName(newFirstName string) {
+	p.firstName = newFirstName
+}
+
+
+/////////////////////////////////////////////////////
+
+POINTERS - 
+
