@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-//We setup structs to work as receiver functions too
-
 type contactInfo struct {
 	email   string
 	zipCode int
@@ -24,20 +22,18 @@ func main() {
 			zipCode: 94000,
 		},
 	}
-	jim.updateName("Jimmy")
+	jimPointer := &jim             //this allows us to point to the memory address for the jim
+	jimPointer.updateName("Jimmy") //since jimPointer now points to the memory now we are able to update the value so *jimPointer is able to update the value of the struct
 	jim.print()
 
 }
 
-//the person struct is a receiver here
 func (p person) print() {
 	fmt.Printf("%+v", p)
 
 }
 
-//we are going to write a function called update name which updates the person as the receiver
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
 
-//This will not directly update the name of the object , so here we will be introduced to pointers
-func (p person) updateName(newFirstName string) {
-	p.firstName = newFirstName
 }

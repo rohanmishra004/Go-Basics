@@ -192,3 +192,75 @@ func (p person) updateName(newFirstName string) {
 
 POINTERS - 
 
+/**
+The reason why this does not update the value of the name is because GoLang is by default a pass by value language , which means whenever we pass somevalue to a function it will , struct will take that value and create a new type and store it at a different point in memory there by keeping the originnal as it is
+
+
+So this update function is not updating the original value of Jim but it creates a copy of that struct
+
+We can use pointers to solve this issue
+
+**/
+
+
+package main
+
+import "fmt"
+
+type contactInfo struct {
+	email   string
+	zipCode int
+}
+
+type person struct {
+	firstName string
+	lastName  string
+	contact   contactInfo
+}
+
+func main() {
+	jim := person{
+		firstName: "Jim",
+		lastName:  "Halper",
+		contact: contactInfo{
+			email:   "jim@gmail.com",
+			zipCode: 94000,
+		},
+	}
+	jimPointer := &jim             //this allows us to point to the memory address for the jim
+	jimPointer.updateName("Jimmy") //since jimPointer now points to the memory now we are able to update the value so *jimPointer is able to update the value of the struct
+	jim.print()
+
+}
+
+func (p person) print() {
+	fmt.Printf("%+v", p)
+
+}
+
+/**
+The reason why this does not update the value of the name is because GoLang is by default a pass by value language , which means whenever we pass somevalue to a function it will , struct will take that value and create a new type and store it at a different point in memory there by keeping the originnal as it is
+
+
+So this update function is not updating the original value of Jim but it creates a copy of that struct
+
+We can use pointers to solve this issue
+
+**/
+
+/**POINTER OPERATIONS
+In the previous we have updated a few lines of code and we are able to get the name update to work and update the person struct that we are passing as receiver
+
+Now lets deep dive and understand what exactly it means
+
+&variable - give me the memory address of the value this variable is pointint at
+*pointer  - Give me the value this memory address it pointing at
+
+**/
+
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
+
+}
+
+
