@@ -1,0 +1,98 @@
+MAPS 
+
+- In Go maps is a collection of key value pairs 
+
+- Its simiar to Hash in Ruby , objects in JS and Dict in Python
+
+
+- In maps both the keys and values are statically typed - keys and values are to be of same type
+
+                     MAPS
+KEYS - same type               VALUES - same type
+
+
+DECLARATION and some built in functions
+
+package main
+
+import "fmt"
+
+func main() {
+	//here we are declaring maps which have type string and all the values are also of type string
+
+	//1st way of declaring maps
+	// colors := map[string]string{
+	// 	"red":   "#ff0000",
+	// 	"green": "#4bf75e",
+	// }
+
+	//2nd way of declaration - we declare it via this method after we want to figue out what values we want to add to it
+	// var colors map[string]string
+
+	//3rd method of declaration
+	colors := make(map[string]string)
+
+	//if we want to add new values to map
+
+	//here white is the key and fffff is the value
+	colors["white"] = "#ffffff"
+	//we donot get access to dot operator like we can do with structs and the reason for this is because all the keys inside the map are typed
+
+	//delete values from map
+	delete(colors, "white")
+
+	fmt.Println(colors)
+}
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+ITERATION and other built in functions
+
+Iteration over maps is very similar to slices 
+
+package main
+
+import "fmt"
+
+func main() {
+
+	colors := map[string]string{
+		"red":   "#ff0000",
+		"green": "#4bf75e",
+		"white": "#ffffff",
+	}
+
+	// fmt.Println(colors)
+	printMap(colors)
+}
+
+//we want to write a new function that accepts a map and iterate over the map and print out all the key values pairs
+
+func printMap(c map[string]string) {
+	for color, hex := range c {
+		fmt.Println("Hex code for", color, "is", hex)
+	}
+}
+
+
+/////////////////////////////////////////////////////
+
+DIFFERENCE between maps and struts
+
+maps 
+- all keys must of the same type
+- use to repesent a collection of related properties
+- all values must be of the same type
+- Dont need to know all the keys at the compile time
+- Keys are indexed we can iterate over them
+- Reference type!
+
+structs
+- values can of different type
+- You need to know all the different fields at the compile time
+- Keys dont support indexing 
+- Use to represent a "thing" with a lot of different properties
+- Value Type!
