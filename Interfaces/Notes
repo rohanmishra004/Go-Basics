@@ -1,0 +1,10 @@
+INTERFACES 
+- Key topic of go
+- We know 
+   - Every value has a type
+   - Every function has to specify the type of arguments
+
+So does that mean - 
+  - Every function we ever write has to be rewritten to accomodate different types even if the logic in it is identical
+
+Interfaces helps us to reuse the code 
