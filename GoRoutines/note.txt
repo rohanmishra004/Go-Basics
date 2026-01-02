@@ -75,3 +75,11 @@ myNumber <- channel : wait for a value to be send into the channel. When we get 
 fmt.Println(<- channel) Wait for a value to be sent into the channel. When we get one log it out immediately
 
 Receiving message from channel is a blocking code execution
+
+
+
+
+
+
+REPEATING ROUTINES 
+

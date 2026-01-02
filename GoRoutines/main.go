@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // we are checking the status of each of these websites
@@ -28,8 +29,21 @@ func main() {
 
 	// fmt.Println(<-c)
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	//this for loop is an infinite loop
+	// for {
+	// 	go checkLink(<-c, c)
+	// 	// fmt.Println(<-c)
+	// }
+
+	//Alternatively in order to pause the program after every fetch call we can use sleep in time package. Sleep pauses the curent go routine, a -ve or 0 duration causes sleep to return immediately
+	for l := range c {
+		//if we put sleep in our main routine then we will cause all our messages to be throttled so in order to prevent that . In order to solve it we can use Function literals , function literals are similar to anonymous functions in JS or Lambda functions in Python
+		// time.Sleep(2 * time.Second)
+		// go checkLink(l, c)
+		go func(link string) {
+			time.Sleep(2 * time.Second)
+			checkLink(link, c)
+		}(l)
 	}
 }
 
@@ -40,8 +54,10 @@ func checkLink(link string, c chan string) {
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, " Might be down")
-		c <- "might be down"
+		// c <- "might be down"
+		c <- link
 	}
 	fmt.Println(link, " is up!!!")
-	c <- "link is up"
+	// c <- "link is up"
+	c <- link
 }
