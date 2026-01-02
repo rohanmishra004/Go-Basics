@@ -24,7 +24,13 @@ func main() {
 		//since we have created the channel we need to pass it to the function
 		go checkLink(link, c)
 	}
-	fmt.Println(<-c)
+	//if we use this once then the main routine will exit after getting response from one of the link but since we require it to execute for all the links we can use for loop to execute till it receives all the data
+
+	// fmt.Println(<-c)
+
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
+	}
 }
 
 //We can make use of go routines to make these calls run in parallel
