@@ -1,0 +1,64 @@
+CHANNELS AND GO ROUTINES
+
+STATUS CHECKER 
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+// we are checking the status of each of these websites
+
+// in this code we are running a sequential check and therefore the code is a bit slow in execution
+func main() {
+	links := []string{
+		"http://google.com",
+		"http://amazon.com",
+		"http://facebook.com",
+	}
+
+	for _, link := range links {
+		checkLink(link)
+	}
+}
+
+func checkLink(link string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Println(link, " Might be down")
+	}
+	fmt.Println(link, " is up!!!")
+}
+
+
+///////////////////////////////////////////////////////////////
+
+
+GO ROUTINES
+Whenever we compile our go program we automatically create a go ROUTINES. Go routine is like an engine it takes every line of our program and executes it one by one
+
+Our code gets blocked at the http.Get call because each time the get call is sending a request to the url and checking if its getting a response back
+
+In order to resolve this we can go to the checklink call inside the for loop 
+
+Since the loop will create different go routines for each call the whole operation would be faster
+
+
+these go routines use a go scheduler which uses a single core of a cpu. Scheduler runs one routine until it finishes or makes a blocking call (like an http call)
+
+By default go tries to use one core.
+
+Scheduler runs one thread on each "logical core"
+
+Concurrency : We can have multiple threads executing code. If one thread blocks, another one is picked up.
+
+Parrelism : Multiple threads executed at the exact same time. Requires multiple cpus.
+
+
+When we run our program , the main function ceates a mai routine. The child routines are created by the go keyword
+
+By simply using the go keyword , we will not get any data because the main routine decides when our programs exits. So even though it still has some child routines to run the program just exits. Here comes the use of Channels, Channels are use to communicate between different go routines
+
+We wull use a channel to ensure that main routine is aware that when child go routines have completed their code
